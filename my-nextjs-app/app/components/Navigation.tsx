@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import GrainGradient from "./GrainGradient";
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState("bio");
@@ -26,8 +27,16 @@ export default function Navigation() {
   }, []);
 
   return (
-    <nav className="sticky top-2 z-30">
-      <div className="pt-4 pb-8 md:pt-6 md:pb-10 bg-background -mx-4 md:-mx-6 lg:-mx-8 px-4 md:px-6 lg:px-8">
+    <nav className="sticky top-2 z-30 relative">
+      {/* Left half: from left vertical (11%) to midpoint (50%) */}
+      <div className="absolute top-0 bottom-0 left-[11%] right-[50%] z-0 pointer-events-none overflow-hidden">
+        <GrainGradient className="absolute inset-0 object-cover" />
+      </div>
+      {/* Right half: from midpoint (50%) to right vertical (11%), mirrored */}
+      <div className="absolute top-0 bottom-0 left-[50%] right-[11%] z-0 pointer-events-none overflow-hidden" style={{ transform: 'scaleX(-1)' }}>
+        <GrainGradient className="absolute inset-0 object-cover" />
+      </div>
+      <div className="pt-4 pb-8 md:pt-6 md:pb-10 -mx-4 md:-mx-6 lg:-mx-8 px-4 md:px-6 lg:px-8 relative z-10">
         <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap">
           <a
             href="#bio"

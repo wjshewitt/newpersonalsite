@@ -13,11 +13,12 @@ export default function HomeShell() {
       <div className="fixed inset-0 pointer-events-none border-[8px] md:border-[6px] sm:border-[4px] border-foreground z-50" />
 
       {/* Main content */}
-      <div className="min-h-screen py-8 relative">
+      <div className="min-h-screen py-8 relative bg-[#F8F6EE]">
         {/* Vertical decorative lines */}
         <div className="absolute top-0 bottom-0 left-[11%] w-[4px] bg-foreground z-40" />
         <div className="absolute top-0 bottom-0 right-[11%] w-[4px] bg-foreground z-40" />
 
+        
         <Navigation />
 
         <main className="relative z-10" id="main-content">
