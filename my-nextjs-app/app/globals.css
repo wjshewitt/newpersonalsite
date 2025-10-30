@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+:root {
+  --background: #f8f6ee;
+  --foreground: #366857;
+  --accent-border: #366857;
+  --accent-muted: #e6deca;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent-border: var(--accent-border);
+  --color-accent-muted: var(--accent-muted);
+  --font-sans: var(--font-ibm-mono);
+  --font-serif: var(--font-eb-garamond);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-serif), serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Navigation styles */
+.nav-link {
+  transition: color 0.2s ease;
+}
+
+/* Focus states */
+.nav-link:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Skip link for accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus\:not-sr-only:focus,
+.focus\:not-sr-only:focus-visible {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  border: 2px solid var(--foreground);
+  border-radius: 4px;
+  background: var(--background);
+}
