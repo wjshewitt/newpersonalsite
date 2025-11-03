@@ -1,8 +1,10 @@
 @import "tailwindcss";
+@import "dither-plugin";
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 120px;
+  overflow-x: hidden;
 }
 
 :root {
@@ -25,6 +27,20 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-serif), serif;
+  overflow-x: hidden;
+  min-width: 100vw;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100vh - 2px);
+  height: 2px;
+  background: var(--accent-border);
+  pointer-events: none;
+  z-index: 9999;
 }
 
 * {

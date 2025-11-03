@@ -7,39 +7,57 @@ interface SectionProps {
   title: string;
   children: React.ReactNode;
   alignment?: 'left' | 'right';
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-export default function Section({ id, title, children, alignment = 'left' }: SectionProps) {
-  const [isOpen, setIsOpen] = useState(true);
+export default function Section({ id, title, children, alignment = 'left', isOpen, onToggle }: SectionProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [titleWidth, setTitleWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => {
     if (titleRef.current) {
       setTitleWidth(titleRef.current.offsetWidth);
     }
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.offsetWidth);
+    }
   }, [title]);
 
+  // Calculate the exact center position for the title
+  const centerPosition = containerWidth > 0 && titleWidth > 0 ? (containerWidth - titleWidth) / 2 : 0;
+  
   const alignmentClasses = {
     container: alignment === 'right' ? 'items-end' : 'items-start',
-    title: isOpen ? 'mx-auto' : (alignment === 'right' ? 'mr-0' : 'ml-0'),
+    title: '', // Will be handled by inline styles
     underline: alignment === 'right' ? 'right-0' : 'left-0',
   };
 
   return (
-    <section id={id} className="py-12 md:py-16 relative">
-      <div style={{ marginLeft: "calc(11% + 4px)", marginRight: "calc(11% + 4px)" }}>
+    <section id={id} className="py-12 md:py-16 relative overflow-x-hidden">
+      <div style={{ marginLeft: "calc(11% + 4px)", marginRight: "calc(11% + 4px)" }} className="overflow-x-hidden">
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={onToggle}
           className="text-left group w-full"
           aria-expanded={isOpen}
         >
           <div
+            ref={containerRef}
             className={`relative w-full flex ${alignmentClasses.container} flex-col`}
           >
             <h2 
               ref={titleRef} 
-              className={`text-2xl md:text-3xl font-sans mb-6 group-hover:opacity-70 transition-all duration-1000 ease-in-out cursor-pointer inline-block ${alignmentClasses.title}`}
+              className="text-2xl md:text-3xl font-sans mb-6 group-hover:opacity-70 transition-all duration-1000 ease-in-out cursor-pointer inline-block"
+              style={{
+                marginLeft: isOpen 
+                  ? `${centerPosition}px` 
+                  : (alignment === 'right' ? 'auto' : '0'),
+                marginRight: isOpen 
+                  ? `${centerPosition}px` 
+                  : (alignment === 'right' ? '0' : 'auto'),
+              }}
             >
               {title}
             </h2>
